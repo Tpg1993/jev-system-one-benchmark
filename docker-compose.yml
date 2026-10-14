@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  # ----------------------------------------------------------------------------
+  # JEV Acceleration & Caching Engine (Sidecar Microservice)
+  # ----------------------------------------------------------------------------
+  jev-engine:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jev
+    container_name: jev-acceleration-engine
+    restart: unless-stopped
+    ports:
+      - "${JEV_PORT:-9000}:9000"
+    environment:
+      - SARVAM_BASE_URL=${SARVAM_BASE_URL:-https://api.sarvam.ai/v1}
+      - SARVAM_API_KEY=${SARVAM_API_KEY:-}
+      - JEV_CACHE_ENABLED=${JEV_CACHE_ENABLED:-true}
+    networks:
+      - benchmark-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # ----------------------------------------------------------------------------
+  # Benchmark Application & Gateway
+  # ----------------------------------------------------------------------------
+  benchmark-app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.app
+    container_name: jev-benchmark-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      - APP_ENV=production
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8000
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-insecure-default-change-in-production}
+      - SARVAM_API_KEY=${SARVAM_API_KEY:-}
+      - SARVAM_BASE_URL=${SARVAM_BASE_URL:-https://api.sarvam.ai/v1}
+      - SARVAM_MODEL_NAME=${SARVAM_MODEL_NAME:-sarvam-105b}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - OPENAI_MODEL_NAME=${OPENAI_MODEL_NAME:-gpt-4o}
+      - JEV_ENABLED=${JEV_ENABLED:-true}
+      - JEV_HOST=jev-engine
+      - JEV_PORT=9000
+      - JEV_CACHE_ENABLED=${JEV_CACHE_ENABLED:-true}
+    depends_on:
+      jev-engine:
+        condition: service_healthy
+    networks:
+      - benchmark-net
+
+networks:
+  benchmark-net:
+    driver: bridge

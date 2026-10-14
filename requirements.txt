@@ -1,0 +1,48 @@
+# Core Web & API Framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic[email]>=2.6.4
+pydantic-settings>=2.2.1
+email-validator>=2.1.0
+
+# HTTP Clients & Async Utilities
+httpx>=0.27.0
+aiohttp>=3.9.3
+
+# LLM Providers & Fallback Engine
+openai>=1.14.0
+tenacity>=8.2.3
+
+# Security, Auth & RBAC
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.9
+
+# Data Processing, Benchmarking & Metrics
+pandas>=2.2.1
+numpy>=1.26.4
+matplotlib>=3.8.3
+seaborn>=0.13.2
+tabulate>=0.9.0
+psutil>=5.9.8
+prometheus-client>=0.20.0
+
+# Stress Testing
+locust>=2.24.0
+
+# Unit Testing & Mocking
+pytest>=8.1.1
+pytest-asyncio>=0.23.6
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+respx>=0.21.1
+
+# UI Automation & Selenium Testing
+selenium>=4.18.1
+webdriver-manager>=4.0.1
+
+# Code Quality & Secret Scanning
+ruff>=0.3.3
+black>=24.3.0
+detect-secrets>=1.4.0
+pre-commit>=3.6.2

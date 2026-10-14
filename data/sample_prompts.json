@@ -1,0 +1,27 @@
+[
+  {
+    "id": "p001",
+    "category": "technical_explanation",
+    "prompt": "Explain the architectural differences between dense Transformers and Mixture of Experts (MoE) models."
+  },
+  {
+    "id": "p002",
+    "category": "code_generation",
+    "prompt": "Write a thread-safe singleton cache implementation in Python with LRU eviction and expiration TTL."
+  },
+  {
+    "id": "p003",
+    "category": "indic_multilingual",
+    "prompt": "Translate this text to Hindi and Tamil: 'Antigravity enables autonomous pair-programming with zero-trust security and dynamic path resolution.'"
+  },
+  {
+    "id": "p004",
+    "category": "summarization",
+    "prompt": "Provide a 3-bullet summary of why KV cache compression is crucial for high concurrency LLM serving engines."
+  },
+  {
+    "id": "p005",
+    "category": "reasoning",
+    "prompt": "A distributed system experiences sudden latency spikes when token batch size reaches 64. What diagnostic steps should be executed?"
+  }
+]
